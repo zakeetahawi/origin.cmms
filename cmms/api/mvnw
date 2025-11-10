@@ -1,0 +1,43 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Maven Wrapper script for Unix-based systems
+# ----------------------------------------------------------------------------
+
+# Get the script directory
+BASEDIR=$(dirname "$0")
+cd "$BASEDIR"
+
+# Set the wrapper jar location
+WRAPPER_JAR=".mvn/wrapper/maven-wrapper.jar"
+
+# Check if wrapper jar exists
+if [ ! -f "$WRAPPER_JAR" ]; then
+    echo "Error: Maven wrapper jar not found at $WRAPPER_JAR"
+    exit 1
+fi
+
+# Determine the Java command to use
+if [ -n "$JAVA_HOME" ] ; then
+    JAVACMD="$JAVA_HOME/bin/java"
+else
+    JAVACMD="java"
+fi
+
+# Check if Java is available
+"$JAVACMD" -version > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    echo "Error: Java is not installed or not in PATH"
+    echo "Please install Java 8 or higher and try again"
+    exit 1
+fi
+
+# Set default Maven options
+MAVEN_OPTS="${MAVEN_OPTS:--Xmx1024m}"
+
+# Run Maven wrapper
+exec "$JAVACMD" \
+    $MAVEN_OPTS \
+    -classpath "$WRAPPER_JAR" \
+    "-Dmaven.multiModuleProjectDirectory=$PWD" \
+    org.apache.maven.wrapper.MavenWrapperMain \
+    "$@"

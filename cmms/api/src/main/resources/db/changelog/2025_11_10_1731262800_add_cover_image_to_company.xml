@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2025_11_10_add_cover_image_to_company" author="Zakee">
+        <comment>Add cover_image_id column to company table</comment>
+        
+        <!-- Add the cover_image_id column -->
+        <addColumn tableName="company">
+            <column name="cover_image_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        
+        <!-- Add foreign key constraint -->
+        <addForeignKeyConstraint 
+            baseTableName="company" 
+            baseColumnNames="cover_image_id" 
+            referencedTableName="file" 
+            referencedColumnNames="id" 
+            constraintName="fk_company_cover_image"
+            onDelete="SET NULL"
+            onUpdate="NO ACTION"/>
+    </changeSet>
+
+</databaseChangeLog>
+

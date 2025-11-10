@@ -1,0 +1,8 @@
+.env
+.env.genaiscript
+.genaiscript
+.DS_Store
+**/.DS_Store
+atlas_backups
+docker-compose-dev.yml
+logo

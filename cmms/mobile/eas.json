@@ -1,0 +1,37 @@
+{
+  "cli": {
+    "version": ">= 3.7.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "channel": "development"
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "ios": {
+        "resourceClass": "m1-medium"
+      }
+    },
+    "production": {
+      "channel": "master",
+      "ios": {
+        "resourceClass": "m1-medium"
+      }
+    },
+    "previewAndroid": {
+      "android": {
+        "buildType": "apk"
+      },
+      "channel": "preview-android"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
