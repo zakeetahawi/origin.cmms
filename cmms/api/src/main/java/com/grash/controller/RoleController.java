@@ -1,5 +1,7 @@
 package com.grash.controller;
 
+import com.grash.dto.FieldPermissionDTO;
+import com.grash.dto.RoleAuditLogDTO;
 import com.grash.dto.RolePatchDTO;
 import com.grash.dto.SuccessResponse;
 import com.grash.exception.CustomException;
@@ -7,6 +9,8 @@ import com.grash.model.OwnUser;
 import com.grash.model.Role;
 import com.grash.model.enums.PermissionEntity;
 import com.grash.model.enums.RoleType;
+import com.grash.service.FieldPermissionService;
+import com.grash.service.RoleAuditLogService;
 import com.grash.service.RoleService;
 import com.grash.service.UserService;
 import io.swagger.annotations.Api;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,28 +37,34 @@ public class RoleController {
 
     private final RoleService roleService;
     private final UserService userService;
+    private final RoleAuditLogService roleAuditLogService;
+    private final FieldPermissionService fieldPermissionService;
 
     @GetMapping("")
     @PreAuthorize("permitAll()")
-    @ApiResponses(value = {//
+    @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Something went wrong"),
             @ApiResponse(code = 403, message = "Access denied"),
-            @ApiResponse(code = 404, message = "RoleCategory not found")})
+            @ApiResponse(code = 404, message = "RoleCategory not found") })
     public Collection<Role> getAll(HttpServletRequest req) {
         OwnUser user = userService.whoami(req);
         if (user.getRole().getRoleType().equals(RoleType.ROLE_CLIENT)) {
             if (user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
                 return roleService.findByCompany(user.getCompany().getId());
-            } else throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
-        } else return roleService.getAll();
+            } else {
+                throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return roleService.getAll();
+        }
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
-    @ApiResponses(value = {//
+    @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Something went wrong"),
             @ApiResponse(code = 403, message = "Access denied"),
-            @ApiResponse(code = 404, message = "Role not found")})
+            @ApiResponse(code = 404, message = "Role not found") })
     public Role getById(@ApiParam("id") @PathVariable("id") Long id, HttpServletRequest req) {
         OwnUser user = userService.whoami(req);
         Optional<Role> optionalRole = roleService.findById(id);
@@ -61,60 +72,128 @@ public class RoleController {
             Role savedRole = optionalRole.get();
             if (user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
                 return savedRole;
-            } else throw new CustomException("Access denied", HttpStatus.FORBIDDEN);
-        } else throw new CustomException("Not found", HttpStatus.NOT_FOUND);
+            } else {
+                throw new CustomException("Access denied", HttpStatus.FORBIDDEN);
+            }
+        } else {
+            throw new CustomException("Not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}/audit-log")
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    public org.springframework.data.domain.Page<RoleAuditLogDTO> getAuditLogs(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            HttpServletRequest req) {
+        OwnUser user = userService.whoami(req);
+        if (!user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
+            throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
+        }
+        Optional<Role> roleOpt = roleService.findById(id);
+        if (roleOpt.isPresent()) {
+            return roleAuditLogService
+                    .getAuditLogsByRole(roleOpt.get(), org.springframework.data.domain.PageRequest.of(page, size))
+                    .map(RoleAuditLogDTO::fromEntity);
+        } else {
+            throw new CustomException("Role not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Field Permission Endpoints
+    @GetMapping("/{id}/field-permissions")
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    public List<FieldPermissionDTO> getFieldPermissions(@PathVariable Long id, HttpServletRequest req) {
+        OwnUser user = userService.whoami(req);
+        if (!user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
+            throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
+        }
+        return fieldPermissionService.getByRoleId(id).stream()
+                .map(FieldPermissionDTO::fromEntity)
+                .toList();
+    }
+
+    @PostMapping("/{id}/field-permissions")
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    public ResponseEntity<?> saveFieldPermissions(@PathVariable Long id,
+            @Valid @RequestBody List<FieldPermissionDTO> dtos,
+            HttpServletRequest req) {
+        OwnUser user = userService.whoami(req);
+        if (!user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
+            throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
+        }
+        // Replace existing permissions
+        fieldPermissionService.deleteByRoleId(id);
+        dtos.forEach(dto -> {
+            com.grash.model.FieldPermission fp = new com.grash.model.FieldPermission();
+            // Set role reference
+            com.grash.model.Role role = new com.grash.model.Role();
+            role.setId(id);
+            fp.setRole(role);
+            fp.setEntityType(dto.getEntityType());
+            fp.setFieldName(dto.getFieldName());
+            fp.setPermissionType(dto.getPermissionType());
+            fieldPermissionService.save(fp);
+        });
+        return new ResponseEntity<>(new SuccessResponse(true, "Field permissions saved"), HttpStatus.OK);
     }
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_CLIENT')")
-    @ApiResponses(value = {//
-            @ApiResponse(code = 500, message = "Something went wrong"), //
-            @ApiResponse(code = 403, message = "Access denied")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied") })
     public Role create(@ApiParam("Role") @Valid @RequestBody Role roleReq, HttpServletRequest req) {
         OwnUser user = userService.whoami(req);
         roleReq.setPaid(true);
         if (user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
-            return roleService.create(roleReq);
-        } else throw new CustomException("Access denied", HttpStatus.FORBIDDEN);
+            return roleService.createWithAudit(roleReq, user);
+        } else {
+            throw new CustomException("Access denied", HttpStatus.FORBIDDEN);
+        }
     }
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_CLIENT')")
-    @ApiResponses(value = {//
-            @ApiResponse(code = 500, message = "Something went wrong"), //
-            @ApiResponse(code = 403, message = "Access denied"), //
-            @ApiResponse(code = 404, message = "Role not found")})
-    public Role patch(@ApiParam("Role") @Valid @RequestBody RolePatchDTO role, @ApiParam("id") @PathVariable("id") Long id,
-                      HttpServletRequest req) {
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Role not found") })
+    public Role patch(@ApiParam("Role") @Valid @RequestBody RolePatchDTO role,
+            @ApiParam("id") @PathVariable("id") Long id,
+            HttpServletRequest req) {
         OwnUser user = userService.whoami(req);
         Optional<Role> optionalRole = roleService.findById(id);
-
         if (optionalRole.isPresent()) {
-            Role savedRole = optionalRole.get();
             if (user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
-                return roleService.update(id, role);
-            } else throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
-        } else throw new CustomException("Role not found", HttpStatus.NOT_FOUND);
+                return roleService.updateWithAudit(id, role, user);
+            } else {
+                throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
+            }
+        } else {
+            throw new CustomException("Role not found", HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_CLIENT')")
-    @ApiResponses(value = {//
-            @ApiResponse(code = 500, message = "Something went wrong"), //
-            @ApiResponse(code = 403, message = "Access denied"), //
-            @ApiResponse(code = 404, message = "Role not found")})
-    public ResponseEntity delete(@ApiParam("id") @PathVariable("id") Long id, HttpServletRequest req) {
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Role not found") })
+    public ResponseEntity<?> delete(@ApiParam("id") @PathVariable("id") Long id, HttpServletRequest req) {
         OwnUser user = userService.whoami(req);
-
         Optional<Role> optionalRole = roleService.findById(id);
         if (optionalRole.isPresent()) {
-            Role savedRole = optionalRole.get();
             if (user.getRole().getViewPermissions().contains(PermissionEntity.SETTINGS)) {
-                roleService.delete(id);
-                return new ResponseEntity(new SuccessResponse(true, "Deleted successfully"),
-                        HttpStatus.OK);
-            } else throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
-        } else throw new CustomException("Role not found", HttpStatus.NOT_FOUND);
+                roleService.deleteWithAudit(id, user);
+                return new ResponseEntity<>(new SuccessResponse(true, "Deleted successfully"), HttpStatus.OK);
+            } else {
+                throw new CustomException("Forbidden", HttpStatus.FORBIDDEN);
+            }
+        } else {
+            throw new CustomException("Role not found", HttpStatus.NOT_FOUND);
+        }
     }
-
 }

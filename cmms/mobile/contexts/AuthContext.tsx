@@ -593,7 +593,11 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         Alert.alert(t('error'), t('failed_push_notification'));
         return;
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+      try {
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+      } catch (error) {
+        console.warn('Failed to get push token:', error);
+      }
     } else {
       Alert.alert('Must use physical device for Push Notifications');
     }
@@ -1039,9 +1043,9 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
       key: keyof UiConfiguration;
       type2: IField['type2'][];
     }[] = [
-      { key: 'locations', type2: ['location'] },
-      { key: 'vendorsAndCustomers', type2: ['vendor', 'customer'] }
-    ];
+        { key: 'locations', type2: ['location'] },
+        { key: 'vendorsAndCustomers', type2: ['vendor', 'customer'] }
+      ];
     const uiConfiguration = state.user.uiConfiguration;
     fields = fields.filter((field) => {
       for (const { key, type2 } of uiConfigurationFieldConfig) {

@@ -60,3 +60,17 @@ export interface Role {
   editOtherPermissions: PermissionEntity[];
   deleteOtherPermissions: PermissionEntity[];
 }
+
+export interface RoleAuditLog {
+  id: number;
+  roleId: number;
+  roleName: string;
+  changedById: number;
+  changedByName: string;
+  changeType: string;
+  fieldName?: string;
+  oldValue?: string;
+  newValue?: string;
+  changedAt: string;
+  description: string;
+}

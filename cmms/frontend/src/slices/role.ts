@@ -2,6 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { AppThunk } from 'src/store';
 import { Role } from '../models/owns/role';
+import { FieldPermissionDTO } from '../models/owns/fieldPermission';
 import api from '../utils/api';
 import { revertAll } from 'src/utils/redux';
 
@@ -63,24 +64,43 @@ export const getRoles = (): AppThunk => async (dispatch) => {
 
 export const addRole =
   (role): AppThunk =>
-  async (dispatch) => {
-    const roleResponse = await api.post<Role>('roles', role);
-    dispatch(slice.actions.addRole({ role: roleResponse }));
-  };
+    async (dispatch) => {
+      const roleResponse = await api.post<Role>('roles', role);
+      dispatch(slice.actions.addRole({ role: roleResponse }));
+    };
 export const editRole =
   (id: number, role): AppThunk =>
-  async (dispatch) => {
-    const roleResponse = await api.patch<Role>(`roles/${id}`, role);
-    dispatch(slice.actions.editRole({ role: roleResponse }));
-  };
+    async (dispatch) => {
+      const roleResponse = await api.patch<Role>(`roles/${id}`, role);
+      dispatch(slice.actions.editRole({ role: roleResponse }));
+    };
 export const deleteRole =
   (id: number): AppThunk =>
-  async (dispatch) => {
-    const roleResponse = await api.deletes<{ success: boolean }>(`roles/${id}`);
-    const { success } = roleResponse;
-    if (success) {
-      dispatch(slice.actions.deleteRole({ id }));
-    }
-  };
+    async (dispatch) => {
+      const roleResponse = await api.deletes<{ success: boolean }>(`roles/${id}`);
+      const { success } = roleResponse;
+      if (success) {
+        dispatch(slice.actions.deleteRole({ id }));
+      }
+    };
+
+export const getRoleAuditLogs = async (
+  id: number,
+  page: number = 0,
+  size: number = 10
+) => {
+  return api.get<{ content: any[]; totalElements: number }>(
+    `roles/${id}/audit-log?page=${page}&size=${size}`
+  );
+};
+
+// Field Permissions thunks
+export const getFieldPermissions = async (id: number): Promise<FieldPermissionDTO[]> => {
+  return api.get<FieldPermissionDTO[]>(`roles/${id}/field-permissions`);
+};
+
+export const saveFieldPermissions = async (id: number, dtos: FieldPermissionDTO[]): Promise<void> => {
+  await api.post<void>(`roles/${id}/field-permissions`, dtos);
+};
 
 export default slice;

@@ -571,7 +571,7 @@ function BottomTabNavigator({ navigation }: RootTabScreenProps<'Home'>) {
                   fontWeight: 'bold'
                 }}
               >
-                Atlas
+                Origin
               </Text>
             ),
             title: t('home'),
@@ -634,12 +634,12 @@ function BottomTabNavigator({ navigation }: RootTabScreenProps<'Home'>) {
             ),
             ...(showBigCreateButton
               ? {
-                  tabBarButton: (props) => (
-                    <CreateTabBarButton onPress={props.onPress}>
-                      {props.children}
-                    </CreateTabBarButton>
-                  )
-                }
+                tabBarButton: (props) => (
+                  <CreateTabBarButton onPress={props.onPress}>
+                    {props.children}
+                  </CreateTabBarButton>
+                )
+              }
               : {})
           }}
         />

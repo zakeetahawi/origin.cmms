@@ -1,0 +1,21 @@
+Warning! Your git working tree is dirty.
+It's recommended to commit all your changes before proceeding, so you can revert the changes made by this command if necessary.
+Git status is dirty but the command will continue because the terminal is not interactive.
+- Clearing android
+✔ Cleared android code
+
+CommandError: Cannot find module '@expo/config-plugins'
+Require stack:
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/react-native-nfc-manager/app.plugin.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/config/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/config/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/config/node_modules/@expo/config-plugins/build/plugins/withPlugins.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/config/node_modules/@expo/config-plugins/build/index.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/config/build/plugins/withConfigPlugins.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/config/build/Config.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/config/build/index.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/cli/build/src/install/installAsync.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/cli/build/src/prebuild/prebuildAsync.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/cli/build/src/prebuild/index.js
+- /home/zakee/erp systems/atlas/cmms/mobile/node_modules/@expo/cli/build/bin/cli
+

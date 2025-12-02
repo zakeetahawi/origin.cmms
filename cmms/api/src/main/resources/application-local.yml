@@ -86,6 +86,13 @@ api:
 
 storage:
   type: LOCAL
+  minio:
+    endpoint: ""
+    bucket: ""
+    access-key: ""
+    secret-key: ""
+    public-endpoint: ""
+
 
 allowed-organization-admins: 
 cloud-version: false

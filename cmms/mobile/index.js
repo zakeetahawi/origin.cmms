@@ -1,3 +1,4 @@
+import './polyfills'; // Must be the first import
 import { registerRootComponent } from 'expo';
 import * as encoding from 'text-encoding';
 

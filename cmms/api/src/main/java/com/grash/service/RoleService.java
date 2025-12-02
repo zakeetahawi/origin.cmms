@@ -20,16 +20,36 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
     private final CompanySettingsService companySettingsService;
+    private final RoleAuditLogService roleAuditLogService;
 
-    public Role create(Role Role) {
-        return roleRepository.save(Role);
+    public Role create(Role role) {
+        return roleRepository.save(role);
+    }
+
+    public Role createWithAudit(Role role, com.grash.model.OwnUser currentUser) {
+        Role savedRole = roleRepository.save(role);
+        roleAuditLogService.logRoleCreation(savedRole, currentUser);
+        return savedRole;
     }
 
     public Role update(Long id, RolePatchDTO role) {
         if (roleRepository.existsById(id)) {
             Role savedRole = roleRepository.findById(id).get();
             return roleRepository.save(roleMapper.updateRole(savedRole, role));
-        } else throw new CustomException("Not found", HttpStatus.NOT_FOUND);
+        } else
+            throw new CustomException("Not found", HttpStatus.NOT_FOUND);
+    }
+
+    public Role updateWithAudit(Long id, RolePatchDTO roleDTO, com.grash.model.OwnUser currentUser) {
+        if (roleRepository.existsById(id)) {
+            Role savedRole = roleRepository.findById(id).get();
+            // Log changes before updating
+            roleAuditLogService.logRoleUpdate(savedRole, roleDTO, currentUser);
+            // Update the role
+            Role updatedRole = roleMapper.updateRole(savedRole, roleDTO);
+            return roleRepository.save(updatedRole);
+        } else
+            throw new CustomException("Not found", HttpStatus.NOT_FOUND);
     }
 
     public Collection<Role> getAll() {
@@ -38,6 +58,16 @@ public class RoleService {
 
     public void delete(Long id) {
         roleRepository.deleteById(id);
+    }
+
+    public void deleteWithAudit(Long id, com.grash.model.OwnUser currentUser) {
+        Optional<Role> roleOpt = roleRepository.findById(id);
+        if (roleOpt.isPresent()) {
+            Role role = roleOpt.get();
+            roleAuditLogService.logRoleDeletion(role, currentUser);
+            roleRepository.deleteById(id);
+        } else
+            throw new CustomException("Not found", HttpStatus.NOT_FOUND);
     }
 
     public Optional<Role> findById(Long id) {

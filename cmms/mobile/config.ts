@@ -5,8 +5,29 @@ export const googleMapsConfig = {
   apiKey: process.env.GOOGLE_KEY
 };
 
-// Default API URL from Expo config
-const defaultApiUrl = Constants.expoConfig.extra.API_URL;
+// Safely get API URL from Expo config with fallback for web
+const getDefaultApiUrl = (): string => {
+  try {
+    // Try to get from expo config first
+    if (Constants.expoConfig?.extra?.API_URL) {
+      return Constants.expoConfig.extra.API_URL;
+    }
+
+    // Fallback for web environment
+    if (typeof window !== 'undefined') {
+      // Use localhost for web development
+      return 'http://localhost:8080';
+    }
+
+    // Final fallback
+    return 'http://192.168.1.3:8080';
+  } catch (error) {
+    console.warn('Error getting API URL from config, using fallback:', error);
+    return 'http://localhost:8080';
+  }
+};
+
+const defaultApiUrl = getDefaultApiUrl();
 export const IS_LOCALHOST = false;
 
 // Function to get the API URL (either custom or default)
@@ -24,3 +45,4 @@ export const getApiUrl = async (): Promise<string> => {
     return rawApiUrl.endsWith('/') ? rawApiUrl : rawApiUrl + '/';
   }
 };
+

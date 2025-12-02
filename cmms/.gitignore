@@ -6,3 +6,37 @@
 atlas_backups
 docker-compose-dev.yml
 logo
+# Dependencies
+node_modules/
+frontend/node_modules/
+mobile/node_modules/
+
+# Build outputs
+api/target/
+frontend/build/
+mobile/android/app/build/
+mobile/.expo/
+
+# Binary files
+.bin/
+
+# Storage data
+minio-data/
+api/storage/
+api/uploads/
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+*.pack
+
+# Large binary files
+.bin/
+*.bin/minio
+*.bin/mc
+dev-docs/*.pdf
+cmms/.bin/
+cmms/dev-docs/*.pdf

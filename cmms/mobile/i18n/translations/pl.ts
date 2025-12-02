@@ -14,8 +14,8 @@ const plJSON = {
   COMPLETE: 'Kompletny',
   'home.built': 'Zbudowany, aby ułatwić zarządzanie konserwacją',
   home_description:
-    'Gdy tablice i karteczki samoprzylepne powodują chaos, a Ty potrzebujesz oprogramowania CMMS, które będzie wystarczająco łatwe w obsłudze dla Twojego zespołu, wypróbuj Atlas',
-  try_grash: 'Wypróbuj Atlas',
+    'Gdy tablice i karteczki samoprzylepne powodują chaos, a Ty potrzebujesz oprogramowania CMMS, które będzie wystarczająco łatwe w obsłudze dla Twojego zespołu, wypróbuj Origin',
+  try_grash: 'Wypróbuj Origin',
   login: 'Zaloguj się',
   start_trial: 'Rozpocznij bezpłatny okres próbny',
   'home.what': 'Co',
@@ -24,7 +24,7 @@ const plJSON = {
     'Twórz wydajne, niezawodne przepływy pracy, które dają Ci kontrolę nad konserwacją. Generuj, przypisuj i śledź zlecenia robocze. Kontroluj zapasy. I uzyskaj niezawodne zautomatyzowane raporty, które poprawią widoczność i stworzą rozliczalność.',
   key_features: 'Główne cechy',
   key_features_description:
-    'Niektóre z funkcji, które sprawiają, że Atlas jest jednym z najlepszych systemów CMMS dostępnych obecnie na rynku',
+    'Niektóre z funkcji, które sprawiają, że Origin jest jednym z najlepszych systemów CMMS dostępnych obecnie na rynku',
   contribute: 'Brać w czymś udział',
   work_orders: 'Zlecenia robocze',
   request_system: 'System żądań pracy',
@@ -39,7 +39,7 @@ const plJSON = {
   'work-orders.descriptions.0':
     'Masz dość stert papierkowej roboty i zagubionych zleceń? Wszystkie te zagubione pozycje bezpośrednio wpływają na wynik finansowy i Twoją reputację.',
   'work-orders.descriptions.1':
-    'Dzięki Atlasowi możesz łatwo i szybko uporządkować wszystkie zlecenia robocze, projekty konserwacji i inne zadania w całym zespole w scentralizowanej bazie danych, do której dostęp masz z dowolnego miejsca i na dowolnym urządzeniu.',
+    'Dzięki Originowi możesz łatwo i szybko uporządkować wszystkie zlecenia robocze, projekty konserwacji i inne zadania w całym zespole w scentralizowanej bazie danych, do której dostęp masz z dowolnego miejsca i na dowolnym urządzeniu.',
   'work-orders.checks.0':
     'Przeglądaj wszystkie swoje zadania, w tym WO, PM i żądania pracy',
   'work-orders.checks.1':
@@ -54,7 +54,7 @@ const plJSON = {
   'work-requests.descriptions.0':
     'Masz dość korzystania ze starego systemu telefonicznego i poczty e-mail, przez które gubią się bilety, pojawiają się ciągłe, codzienne przerwy i powtarzają się zadania?',
   'work-requests.descriptions.1':
-    'Rozwiązanie firmy Atlas do zarządzania konserwacją pozwala każdej upoważnionej osobie zgłosić problem do działu konserwacji poprzez zeskanowanie kodu QR (kodu kreskowego) lub odwiedzenie adresu URL i wpisanie swojej prośby za pomocą urządzenia mobilnego.',
+    'Rozwiązanie firmy Origin do zarządzania konserwacją pozwala każdej upoważnionej osobie zgłosić problem do działu konserwacji poprzez zeskanowanie kodu QR (kodu kreskowego) lub odwiedzenie adresu URL i wpisanie swojej prośby za pomocą urządzenia mobilnego.',
   'work-requests.checks.0': 'Nie trać już nigdy swojej pracy.',
   'work-requests.checks.1':
     'Skróć czas poświęcany na obsługę żądań roboczych nawet o 34%.',
@@ -81,7 +81,7 @@ const plJSON = {
   'eam.descriptions.0':
     'Czujesz frustrację, próbując uporządkować chaotyczny bałagan sprzętu firmowego, zastanawiasz się, czy o sprzęt odpowiednio dbano, nie wiesz, ile kosztuje jego utrzymanie i zmagasz się ze wszystkimi innymi problemami związanymi z zarządzaniem aktywami?',
   'eam.descriptions.1':
-    'Moduł Enterprise Asset Management systemu Atlas CMMS można wykorzystać do zarządzania aktywami obejmującymi od 10 do 1 000 000 aktywów. Pozwala on śledzić dokładnie to, co chcesz i w sposób, w jaki chcesz, w łatwej w użyciu i przeszukiwalnej strukturze drzewa.',
+    'Moduł Enterprise Asset Management systemu Origin CMMS można wykorzystać do zarządzania aktywami obejmującymi od 10 do 1 000 000 aktywów. Pozwala on śledzić dokładnie to, co chcesz i w sposób, w jaki chcesz, w łatwej w użyciu i przeszukiwalnej strukturze drzewa.',
   'eam.checks.0':
     'Poznaj stan swoich aktywów w każdym momencie i dowiedz się, ile Cię to kosztuje',
   'eam.checks.1': 'Przeglądaj kompletne i szczegółowe dzienniki konserwacji.',
@@ -97,7 +97,7 @@ const plJSON = {
   'pm.descriptions.0':
     'Przestań marnować cenne godziny na ręczne rozsyłanie list kontrolnych PM i kontaktowanie się z zespołem, aby upewnić się, że praca została wykonana.',
   'pm.descriptions.1':
-    'Atlas umożliwia łatwą automatyzację harmonogramowania konserwacji prewencyjnej, dzięki czemu właściwa praca jest automatycznie dostarczana we właściwym czasie właściwemu technikowi w odniesieniu do właściwego zasobu.',
+    'Origin umożliwia łatwą automatyzację harmonogramowania konserwacji prewencyjnej, dzięki czemu właściwa praca jest automatycznie dostarczana we właściwym czasie właściwemu technikowi w odniesieniu do właściwego zasobu.',
   'pm.checks.0':
     'Zautomatyzuj planowanie konserwacji prewencyjnej w trybie dziennym, tygodniowym, miesięcznym, rocznym lub na podstawie zdarzeń lub odczytów liczników.',
   'pm.checks.1':
@@ -115,7 +115,7 @@ const plJSON = {
   'part.descriptions.0':
     'Nie wiesz, jakie części masz w magazynie lub gdzie są używane? Nie wiesz, kiedy części się skończą lub czy Twoi technicy będą mieli niezbędne części do wykonania swojej pracy?',
   'part.descriptions.1':
-    'Zaprojektowaliśmy system zarządzania częściami Atlasa, aby rozwiązać te i inne problemy:',
+    'Zaprojektowaliśmy system zarządzania częściami Origina, aby rozwiązać te i inne problemy:',
   'part.checks.0':
     'Otrzymuj natychmiastowe powiadomienia push i e-mail, gdy ilość części jest niska. Utrzymuj odpowiednią liczbę części w magazynie, otrzymując natychmiastowe i automatyczne powiadomienia push/e-mail, gdy ilość części jest poniżej określonego progu.',
   'part.checks.1':
@@ -137,9 +137,9 @@ const plJSON = {
   'dashboard.descriptions.0':
     'Bądźmy szczerzy, pierwszym krokiem do usprawnienia działalności jest poznanie dobrych, złych i brzydkich stron.',
   'dashboard.descriptions.1':
-    'Dzięki niestandardowym pulpitom nawigacyjnym firmy Atlas możesz wreszcie zacząć rozumieć tę złowrogą „czarną dziurę konserwacji” i zacząć wdrażać plany poparte danymi, co przełoży się na obniżenie kosztów pracy, skrócenie przestojów i wiele więcej.',
+    'Dzięki niestandardowym pulpitom nawigacyjnym firmy Origin możesz wreszcie zacząć rozumieć tę złowrogą „czarną dziurę konserwacji” i zacząć wdrażać plany poparte danymi, co przełoży się na obniżenie kosztów pracy, skrócenie przestojów i wiele więcej.',
   'dashboard.descriptions.2':
-    'Dzięki niestandardowym pulpitom nawigacyjnym Atlas możesz…',
+    'Dzięki niestandardowym pulpitom nawigacyjnym Origin możesz…',
   'dashboard.checks.0':
     'Dowiedz się, gdzie i dlaczego wydawane są Twoje pieniądze',
   'dashboard.checks.1':
@@ -148,12 +148,12 @@ const plJSON = {
   'dashboard.checks.3':
     'Przeglądaj raporty generowane automatycznie i aktualizowane na podstawie Twoich danych',
   'dashboard.checks.4':
-    'Przeglądaj raporty, które można łatwo udostępniać za pośrednictwem arkuszy Excel, plików PDF lub w Atlasie',
+    'Przeglądaj raporty, które można łatwo udostępniać za pośrednictwem arkuszy Excel, plików PDF lub w Originie',
   'dashboard.checks.5': 'I wiele więcej...',
   'home.smarter': 'Mądrzejszy',
   'home.work': 'Praca',
   'home.smarter_description':
-    'Atlas znacznie ułatwia technikom efektywną pracę, zapewniając im dostęp do narzędzi i danych potrzebnych do wykonania pracy — wszystko z poziomu ich dłoni.',
+    'Origin znacznie ułatwia technikom efektywną pracę, zapewniając im dostęp do narzędzi i danych potrzebnych do wykonania pracy — wszystko z poziomu ich dłoni.',
   leading_maintenance:
     'Prowadzenie do lepszej przyszłości w zakresie konserwacji i niezawodności',
   premium_included: 'Zawiera funkcje premium',
@@ -286,7 +286,7 @@ const plJSON = {
   save: 'Ratować',
   customers: 'Wykonawcy',
   no_labor:
-    'Nie dodano jeszcze żadnych kosztów pracy. Będą one wyświetlane tutaj, gdy użytkownik zaloguje czas i będzie miał zapisaną stawkę godzinową w Atlasie.',
+    'Nie dodano jeszcze żadnych kosztów pracy. Będą one wyświetlane tutaj, gdy użytkownik zaloguje czas i będzie miał zapisaną stawkę godzinową w Originie.',
   not_assigned: 'Nie przypisano',
   no_additional_cost: 'Nie dodano jeszcze żadnych dodatkowych kosztów',
   parts: 'Strony',
@@ -844,7 +844,7 @@ const plJSON = {
   external_id: 'Zewnętrzny identyfikator',
   permissions: 'Uprawnienia',
   create_role_description:
-    'Ta rola umożliwia wykonywanie wszystkich czynności, jakie może wykonywać Administrator w systemie Atlas, jednak poniżej możesz dostosować niektóre ważne uprawnienia.',
+    'Ta rola umożliwia wykonywanie wszystkich czynności, jakie może wykonywać Administrator w systemie Origin, jednak poniżej możesz dostosować niektóre ważne uprawnienia.',
   create_and_edit: 'Utwórz/Edytuj',
   to_access: 'Dostęp',
   role_delete_success: 'Rola została pomyślnie usunięta',
@@ -1060,7 +1060,7 @@ const plJSON = {
   plan: 'Plan',
   current_plan: 'Aktualny plan',
   number_users_who_will_use_grash:
-    'Liczba użytkowników, którzy będą korzystać z Atlasa',
+    'Liczba użytkowników, którzy będą korzystać z Origina',
   admin_role: 'Administracja',
   technical_role: 'Techniczny',
   limited_technical_role: 'Ograniczone techniczne',
@@ -1221,7 +1221,7 @@ const plJSON = {
   and_optional: 'I (opcjonalnie)',
   then: 'Następnie',
   workflow_description:
-    'Twórz niestandardowe przepływy pracy tak łatwo jak Jeśli, I, Wtedy. Oszczędzaj czas i łatwo przypisuj zlecenia pracy automatycznie za pomocą przepływów pracy, aby dostosować Atlas do sposobu działania Twojego zespołu.\nWszystkie plany mogą tworzyć do 1 niestandardowego przepływu pracy. Aby dodać dodatkowe przepływy pracy, przejdź na nasz plan Business.',
+    'Twórz niestandardowe przepływy pracy tak łatwo jak Jeśli, I, Wtedy. Oszczędzaj czas i łatwo przypisuj zlecenia pracy automatycznie za pomocą przepływów pracy, aby dostosować Origin do sposobu działania Twojego zespołu.\nWszystkie plany mogą tworzyć do 1 niestandardowego przepływu pracy. Aby dodać dodatkowe przepływy pracy, przejdź na nasz plan Business.',
   CREATE_PURCHASE_ORDER: 'Utwórz zamówienie zakupu',
   PART_IS: 'Część jest',
   QUANTITY_INFERIOR: 'Ilość jest mniejsza niż',
@@ -1284,7 +1284,7 @@ const plJSON = {
   upgrade: 'Aktualizacja',
   downgrade: 'Nachylenie',
   upgrade_description:
-    'Właśnie uaktualniłeś swój plan subskrypcji. Musisz włączyć wyłączonych użytkowników, którzy mogą korzystać z Atlasa. Możesz to zrobić tylko raz dla bieżącej subskrypcji. Wybierz ostrożnie',
+    'Właśnie uaktualniłeś swój plan subskrypcji. Musisz włączyć wyłączonych użytkowników, którzy mogą korzystać z Origina. Możesz to zrobić tylko raz dla bieżącej subskrypcji. Wybierz ostrożnie',
   enable_users: 'Włącz użytkowników',
   max_users_description: 'Możesz włączyć maksymalnie {{maxUsers}} użytkowników',
   downgrade_description:

@@ -3,6 +3,7 @@ package com.grash;
 import com.grash.dto.UserSignupRequest;
 import com.grash.model.*;
 import com.grash.model.enums.Language;
+import com.grash.model.enums.PermissionEntity;
 import com.grash.model.enums.PlanFeatures;
 import com.grash.model.enums.RoleCode;
 import com.grash.model.enums.RoleType;
@@ -45,11 +46,17 @@ public class ApiApplication implements CommandLineRunner {
         Role savedSuperAdminRole = roleService.findByName(superAdminRole)
                 .orElseGet(() -> {
                     Company company = companyService.create(new Company());
+                    List<PermissionEntity> allEntities = Arrays.asList(PermissionEntity.values());
                     return roleService.create(Role.builder()
                             .name(superAdminRole)
                             .companySettings(company.getCompanySettings())
                             .code(RoleCode.ADMIN)
                             .roleType(RoleType.ROLE_SUPER_ADMIN)
+                            .createPermissions(new HashSet<>(allEntities))
+                            .editOtherPermissions(new HashSet<>(allEntities))
+                            .deleteOtherPermissions(new HashSet<>(allEntities))
+                            .viewOtherPermissions(new HashSet<>(allEntities))
+                            .viewPermissions(new HashSet<>(allEntities))
                             .build());
                 });
 

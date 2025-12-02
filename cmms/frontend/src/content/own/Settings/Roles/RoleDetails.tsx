@@ -15,6 +15,8 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { PermissionEntity, Role } from '../../../../models/owns/role';
 import useAuth from '../../../../hooks/useAuth';
 import { PlanFeature } from '../../../../models/owns/subscriptionPlan';
+import RoleAuditLogTable from './RoleAuditLogTable';
+import RoleFieldPermissions from './RoleFieldPermissions';
 
 interface RoleDetailsProps {
   role: Role;
@@ -217,6 +219,10 @@ export default function RoleDetails(props: RoleDetailsProps) {
             <PermissionsGroup name={'access'} title={t('to_access')} />
           </Grid>
         </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <RoleAuditLogTable roleId={role.id} />
+        <RoleFieldPermissions roleId={role.id} />
       </Grid>
     </Grid>
   );

@@ -55,11 +55,16 @@ public class MinioService implements StorageService {
             MinioClient.Builder minioClientBuilder = MinioClient.builder()
                     .endpoint(minioPublicEndpoint)
                     .credentials(minioAccessKey, minioSecretKey);
-            if (Helper.isLocalhost(minioPublicEndpoint)) minioClientBuilder.httpClient(
-                    new OkHttpClient.Builder().proxy(new Proxy(Proxy.Type.HTTP,
-                            new InetSocketAddress(minioEndpointURI.getHost(), minioEndpointURI.getPort()))).build()
-            );
-            minioClient = minioClientBuilder.build();
+            // Only set proxy if not localhost
+            if (Helper.isLocalhost(minioPublicEndpoint)) {
+                // For localhost, no proxy needed
+                minioClient = minioClientBuilder.build();
+            } else {
+                minioClient = minioClientBuilder.httpClient(
+                        new OkHttpClient.Builder().proxy(new Proxy(Proxy.Type.HTTP,
+                                new InetSocketAddress(minioEndpointURI.getHost(), minioEndpointURI.getPort()))).build()
+                ).build();
+            }
             // Check if the bucket exists, create if it doesn't
             boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(minioBucket).build());
             if (!found) {

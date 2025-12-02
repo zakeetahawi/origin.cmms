@@ -35,8 +35,9 @@ export default function LoginScreen({
         contentContainerStyle={{ alignItems: 'center' }}
       >
         <Image
-          style={{ height: 180, width: 180 }}
-          source={Asset.fromModule(require('../../assets/images/icon.png'))}
+          style={{ height: 180, width: 180, borderRadius: 10 }}
+          source={Asset.fromModule(require('../../assets/images/company-logo.png'))}
+          resizeMode="contain"
         />
         <Formik
           initialValues={{

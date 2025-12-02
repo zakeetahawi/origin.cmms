@@ -23,6 +23,8 @@ public class CompanyService {
     private final CompanyMapper companyMapper;
     private final EntityManager em;
 
+    private final com.grash.repository.FileRepository fileRepository;
+
     public Company create(Company Company) {
         return companyRepository.save(Company);
     }
@@ -46,6 +48,12 @@ public class CompanyService {
     @Transactional
     public Company update(Long id, CompanyPatchDTO company) {
         if (companyRepository.existsById(id)) {
+            if (company.getCoverImage() != null && company.getCoverImage().getId() != null) {
+                company.setCoverImage(fileRepository.findById(company.getCoverImage().getId()).orElse(null));
+            }
+            if (company.getLogo() != null && company.getLogo().getId() != null) {
+                company.setLogo(fileRepository.findById(company.getLogo().getId()).orElse(null));
+            }
             Company savedCompany = companyRepository.findById(id).get();
             Company updatedCompany = companyRepository.saveAndFlush(companyMapper.updateCompany(savedCompany, company));
             em.refresh(updatedCompany);

@@ -5,12 +5,12 @@ const apiUrl = process.env.API_URL;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'Atlas CMMS',
-  slug: 'atlas-cmms',
+  name: 'Origin CMMS',
+  slug: 'origin-cmms',
   version: '1.0.29',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
-  scheme: 'atlascmms',
+  scheme: 'origincmms',
   userInterfaceStyle: 'automatic',
   notification: {
     icon: './assets/images/notification.png'
@@ -38,7 +38,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: '#ffffff'
     },
     versionCode: 26,
-    package: 'com.atlas.cmms',
+    package: 'com.origin.cmms',
     googleServicesFile: './google-services.json',
     runtimeVersion: '1.0.0'
   },
@@ -56,7 +56,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-barcode-scanner',
       {
-        cameraPermission: 'Allow Atlas to access camera.'
+        cameraPermission: 'Allow Origin CMMS to access camera.'
       }
     ]
   ]

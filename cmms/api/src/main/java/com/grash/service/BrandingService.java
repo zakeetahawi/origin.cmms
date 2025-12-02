@@ -35,13 +35,13 @@ public class BrandingService {
 
     public BrandConfig getBrandConfig() {
         BrandConfig defaultConfig = BrandConfig.builder()
-                .name("Atlas CMMS")
-                .shortName("Atlas")
-                .website("https://www.atlas-cmms.com")
-                .mail("contact@atlas-cmms.com")
-                .phone("+212 6 30 69 00 50")
-                .addressStreet("410, Boulevard Zerktouni, Hamad, №1")
-                .addressCity("Casablanca-Morocco 20040")
+                .name("origin CMMS")
+                .shortName("origin")
+                .website("https://www.origin-cmms.com")
+                .mail("contact@origin-cmms.com")
+                .phone("+201119238775")
+                .addressStreet("cairo")
+                .addressCity("cairo")
                 .build();
         if (!licenseService.isLicenseValid()) return defaultConfig;
         if (brandRawConfig == null || brandRawConfig.isEmpty()) {
