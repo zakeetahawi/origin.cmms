@@ -1,4 +1,4 @@
-# Atlas CMMS - Local Setup Guide (Without Docker)
+# Origin CMMS - Local Setup Guide (Without Docker)
 
 ## المتطلبات الأساسية | Prerequisites
 
@@ -124,7 +124,7 @@ sudo systemctl status postgresql
 sudo systemctl restart postgresql
 
 # اختبار الاتصال
-psql -h localhost -U rootUser -d atlas
+psql -h localhost -U rootUser -d origin
 ```
 
 ### المنافذ مستخدمة بالفعل

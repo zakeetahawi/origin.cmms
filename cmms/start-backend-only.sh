@@ -9,14 +9,14 @@ sleep 2
 
 # Start backend
 echo "Starting backend on port 8080..."
-cd /home/zakee/atlas/cmms/api
+cd /home/zakee/origin/cmms/api
 
 # Run with MinIO configuration
 ./mvnw spring-boot:run \
   -Dspring-boot.run.jvmArguments=" \
     -Xmx2048m \
     -Dstorage.minio.endpoint=http://localhost:9000 \
-    -Dstorage.minio.bucket=atlas-bucket \
+    -Dstorage.minio.bucket=origin-bucket \
     -Dstorage.minio.access-key=minio \
     -Dstorage.minio.secret-key=minio123 \
     -Dstorage.minio.public-endpoint=http://localhost:9000 \

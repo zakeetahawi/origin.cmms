@@ -12,7 +12,7 @@
     <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api</name>
-    <description>Atlas application programming interface</description>
+    <description>Origin application programming interface</description>
     <properties>
         <java.version>21</java.version>
         <lombok.version>1.18.34</lombok.version>

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Start All Services for Atlas CMMS (without Docker)
+# Start All Services for Origin CMMS (without Docker)
 
 set -e
 
@@ -20,7 +20,7 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 cd "$PROJECT_DIR"
 
 echo -e "${MAGENTA}╔══════════════════════════════════════╗${NC}"
-echo -e "${MAGENTA}║      Atlas CMMS - Local Setup        ║${NC}"
+echo -e "${MAGENTA}║      Origin CMMS - Local Setup        ║${NC}"
 echo -e "${MAGENTA}╚══════════════════════════════════════╝${NC}"
 echo ""
 echo -e "${YELLOW}Project directory: $PROJECT_DIR${NC}"

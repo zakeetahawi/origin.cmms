@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setup MinIO bucket for Atlas CMMS
+# Setup MinIO bucket for Origin CMMS
 
 echo "Setting up MinIO..."
 
@@ -30,8 +30,8 @@ EOF
 if command -v mc &> /dev/null; then
     echo "Using MinIO Client..."
     mc alias set local http://localhost:9000 minio minio123
-    mc mb local/atlas-bucket --ignore-existing
-    mc policy set public local/atlas-bucket
+    mc mb local/origin-bucket --ignore-existing
+    mc policy set public local/origin-bucket
     echo "Bucket created successfully!"
 else
     echo "MinIO Client not found, creating bucket via API..."
@@ -41,7 +41,7 @@ else
         -H "Date: $(date -R)" \
         -H "Content-Type: application/xml" \
         -H "Authorization: AWS minio:minio123" \
-        http://localhost:9000/atlas-bucket 2>/dev/null || true
+        http://localhost:9000/origin-bucket 2>/dev/null || true
     echo "Bucket creation attempted!"
 fi
 

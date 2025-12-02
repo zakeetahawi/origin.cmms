@@ -3,8 +3,8 @@
   "background_color": "#f2f5f9",
   "display": "standalone",
   "start_url": ".",
-  "short_name": "Atlas",
-  "name": "Atlas CMMS",
+  "short_name": "Origin",
+  "name": "Origin CMMS",
   "icons": [
     {
       "src": "/favicon-32x32.png",

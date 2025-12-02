@@ -76,14 +76,14 @@ function Footer() {
               <Box
                 sx={{ cursor: 'pointer' }}
                 onClick={() =>
-                  (window.location.href = 'mailto:contact@atlas-cmms.com')
+                  (window.location.href = 'mailto:contact@origin-cmms.com')
                 }
                 display="flex"
                 alignItems="center"
               >
                 <Mail fontSize="small" />
                 <Typography variant="body2" sx={{ ml: 1 }}>
-                  contact@atlas-cmms.com
+                  contact@origin-cmms.com
                 </Typography>
               </Box>
               <Box display="flex" alignItems="center">
@@ -129,7 +129,7 @@ function Footer() {
                 style={{ cursor: 'pointer' }}
                 onClick={() =>
                   (window.location.href =
-                    'https://play.google.com/store/apps/details?id=com.atlas.cmms')
+                    'https://play.google.com/store/apps/details?id=com.origin.cmms')
                 }
                 width={'150px'}
                 src={'/static/images/overview/playstore-badge.png'}
@@ -138,7 +138,7 @@ function Footer() {
                 style={{ cursor: 'pointer' }}
                 onClick={() =>
                   (window.location.href =
-                    'https://apps.apple.com/us/app/atlas-cmms/id6751547284')
+                    'https://apps.apple.com/us/app/origin-cmms/id6751547284')
                 }
                 width={'150px'}
                 src={'/static/images/overview/app_store_badge.svg.webp'}

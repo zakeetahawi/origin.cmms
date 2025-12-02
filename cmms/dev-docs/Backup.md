@@ -1,22 +1,22 @@
-# Atlas CMMS Backup and Restore Guide
+# Origin CMMS Backup and Restore Guide
 
-This document provides instructions for backing up and restoring your Atlas CMMS system using the provided utility scripts. The utilities are available for both Windows and Linux operating systems.
+This document provides instructions for backing up and restoring your Origin CMMS system using the provided utility scripts. The utilities are available for both Windows and Linux operating systems.
 
 ## Prerequisites
 
 - Docker and Docker Compose installed and running
-- Atlas CMMS system up and running
+- Origin CMMS system up and running
 - Administrative access to your system
 
 ## Windows Instructions
 
 ### Setup
 
-1. Save the [atlas-backup.ps1](../scripts/backup/atlas-backup.ps1) script to your Atlas CMMS project directory
+1. Save the [origin-backup.ps1](../scripts/backup/origin-backup.ps1) script to your Origin CMMS project directory
 2. Open PowerShell as Administrator
-3. Navigate to your Atlas CMMS project directory:
+3. Navigate to your Origin CMMS project directory:
    ```powershell
-   cd C:\path\to\your\atlas\project
+   cd C:\path\to\your\origin\project
    ```
 4. Ensure script execution is allowed:
    ```powershell
@@ -25,36 +25,36 @@ This document provides instructions for backing up and restoring your Atlas CMMS
 
 ### Creating a Backup
 
-To create a complete backup of your Atlas CMMS system:
+To create a complete backup of your Origin CMMS system:
 
 ```powershell
-.\atlas-backup.ps1 backup
+.\origin-backup.ps1 backup
 ```
 
 The script will:
 1. Check if Docker is running
 2. Back up the PostgreSQL database
 3. Back up the MinIO file storage
-4. Create a ZIP archive in the `atlas_backups` directory
+4. Create a ZIP archive in the `origin_backups` directory
 
 #### Optional Parameters
 
 To skip backing up the database:
 ```powershell
-.\atlas-backup.ps1 backup -SkipDb
+.\origin-backup.ps1 backup -SkipDb
 ```
 
 To skip backing up the files:
 ```powershell
-.\atlas-backup.ps1 backup -SkipFiles
+.\origin-backup.ps1 backup -SkipFiles
 ```
 
 ### Restoring from a Backup
 Ensure the backend container is stopped.
-To restore your Atlas CMMS system from a backup:
+To restore your Origin CMMS system from a backup:
 
 ```powershell
-.\atlas-backup.ps1 restore .\atlas_backups\atlas_backup_YYYYMMDD_HHMMSS.zip
+.\origin-backup.ps1 restore .\origin_backups\origin_backup_YYYYMMDD_HHMMSS.zip
 ```
 
 Replace `YYYYMMDD_HHMMSS` with the timestamp of your backup file.
@@ -63,61 +63,61 @@ Replace `YYYYMMDD_HHMMSS` with the timestamp of your backup file.
 
 To skip restoring the database:
 ```powershell
-.\atlas-backup.ps1 restore .\atlas_backups\atlas_backup_YYYYMMDD_HHMMSS.zip -SkipDb
+.\origin-backup.ps1 restore .\origin_backups\origin_backup_YYYYMMDD_HHMMSS.zip -SkipDb
 ```
 
 To skip restoring the files:
 ```powershell
-.\atlas-backup.ps1 restore .\atlas_backups\atlas_backup_YYYYMMDD_HHMMSS.zip -SkipFiles
+.\origin-backup.ps1 restore .\origin_backups\origin_backup_YYYYMMDD_HHMMSS.zip -SkipFiles
 ```
 
 ## Linux Instructions
 
 ### Setup
 
-1. Save the [atlas-backup.sh](../scripts/backup/atlas-backup.sh) script to your Atlas CMMS project directory
+1. Save the [origin-backup.sh](../scripts/backup/origin-backup.sh) script to your Origin CMMS project directory
 2. Open a terminal
-3. Navigate to your Atlas CMMS project directory:
+3. Navigate to your Origin CMMS project directory:
    ```bash
-   cd /path/to/your/atlas/project
+   cd /path/to/your/origin/project
    ```
 4. Make the script executable:
    ```bash
-   chmod +x atlas-backup.sh
+   chmod +x origin-backup.sh
    ```
 
 ### Creating a Backup
 
-To create a complete backup of your Atlas CMMS system:
+To create a complete backup of your Origin CMMS system:
 
 ```bash
-./atlas-backup.sh backup
+./origin-backup.sh backup
 ```
 
 The script will:
 1. Check if Docker is running
 2. Back up the PostgresSQL database
 3. Back up the MinIO file storage
-4. Create a tar.gz archive in the `atlas_backups` directory
+4. Create a tar.gz archive in the `origin_backups` directory
 
 #### Optional Parameters
 
 To skip backing up the database:
 ```bash
-./atlas-backup.sh backup --skip-db
+./origin-backup.sh backup --skip-db
 ```
 
 To skip backing up the files:
 ```bash
-./atlas-backup.sh backup --skip-files
+./origin-backup.sh backup --skip-files
 ```
 
 ### Restoring from a Backup
 Ensure the backend container is stopped.
-To restore your Atlas CMMS system from a backup:
+To restore your Origin CMMS system from a backup:
 
 ```bash
-./atlas-backup.sh restore ./atlas_backups/atlas_backup_YYYYMMDD_HHMMSS.tar.gz
+./origin-backup.sh restore ./origin_backups/origin_backup_YYYYMMDD_HHMMSS.tar.gz
 ```
 
 Replace `YYYYMMDD_HHMMSS` with the timestamp of your backup file.
@@ -126,17 +126,17 @@ Replace `YYYYMMDD_HHMMSS` with the timestamp of your backup file.
 
 To skip restoring the database:
 ```bash
-./atlas-backup.sh restore ./atlas_backups/atlas_backup_YYYYMMDD_HHMMSS.tar.gz --skip-db
+./origin-backup.sh restore ./origin_backups/origin_backup_YYYYMMDD_HHMMSS.tar.gz --skip-db
 ```
 
 To skip restoring the files:
 ```bash
-./atlas-backup.sh restore ./atlas_backups/atlas_backup_YYYYMMDD_HHMMSS.tar.gz --skip-files
+./origin-backup.sh restore ./origin_backups/origin_backup_YYYYMMDD_HHMMSS.tar.gz --skip-files
 ```
 
 ## Environment Configuration
 
-Both scripts automatically read credentials from a `.env` file in the same directory. If your Atlas CMMS uses custom credentials, make sure your `.env` file contains the following variables:
+Both scripts automatically read credentials from a `.env` file in the same directory. If your Origin CMMS uses custom credentials, make sure your `.env` file contains the following variables:
 
 ```
 POSTGRES_USER=your_postgres_username
@@ -149,13 +149,13 @@ If the `.env` file is not present, the scripts will use default credentials:
 
 ## Important Notes
 
-1. **Database Restoration**: When restoring a database, the script renames your current database to `atlas_old` before creating a new `atlas` database with the backup data. This allows for recovery if the restore process fails.
+1. **Database Restoration**: When restoring a database, the script renames your current database to `origin_old` before creating a new `origin` database with the backup data. This allows for recovery if the restore process fails.
 
 2. **Confirmation Prompts**: The restore operation will prompt for confirmation before overwriting your database or files.
 
-3. **Backup Directory**: All backups are stored in an `atlas_backups` directory created in the same location as the script.
+3. **Backup Directory**: All backups are stored in an `origin_backups` directory created in the same location as the script.
 
-4. **Network Configuration**: The scripts assume your Docker Compose network is named `atlas-cmms_default`. If your setup uses a different network name, you'll need to modify the scripts accordingly.
+4. **Network Configuration**: The scripts assume your Docker Compose network is named `origin-cmms_default`. If your setup uses a different network name, you'll need to modify the scripts accordingly.
 
 ## Troubleshooting
 
@@ -168,7 +168,7 @@ If you receive an error about Docker not running, ensure Docker Desktop (Windows
 
 ### Container Not Found
 
-If you see errors about containers not being found, ensure your Atlas CMMS environment is running:
+If you see errors about containers not being found, ensure your Origin CMMS environment is running:
 
 ```bash
 docker-compose ps  # Check if containers are running
@@ -180,7 +180,7 @@ docker-compose up -d  # Start containers if needed
 If you encounter permission errors on Linux, make sure the script is executable:
 
 ```bash
-chmod +x atlas-backup.sh
+chmod +x origin-backup.sh
 ```
 
 ### Network Issues
@@ -191,4 +191,4 @@ If the script cannot connect to containers, verify your Docker network configura
 docker network ls
 ```
 
-If your Atlas CMMS network is not named `atlas-cmms_default`, you'll need to update the network name in the scripts.
+If your Origin CMMS network is not named `origin-cmms_default`, you'll need to update the network name in the scripts.

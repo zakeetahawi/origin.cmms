@@ -1,11 +1,11 @@
-# Atlas CMMS - Quick Start Guide
+# Origin CMMS - Quick Start Guide
 
 ## البدء السريع | Quick Start
 
 ### الطريقة الأسهل (من المجلد الرئيسي):
 
 ```bash
-cd /home/zakee/atlas/cmms
+cd /home/zakee/origin/cmms
 
 # لتشغيل المشروع:
 ./start.sh
@@ -17,7 +17,7 @@ cd /home/zakee/atlas/cmms
 ### استخدام السكريبتات المتقدمة:
 
 ```bash
-cd /home/zakee/atlas/cmms/scripts
+cd /home/zakee/origin/cmms/scripts
 
 # قائمة تفاعلية:
 ./start-all.sh
@@ -39,7 +39,7 @@ cd /home/zakee/atlas/cmms/scripts
 تحقق من قاعدة البيانات للحصول على بيانات المستخدمين الموجودين:
 
 ```sql
-PGPASSWORD=5525 psql -h localhost -U rootuser -d atlas -c "SELECT email, role FROM users LIMIT 5;"
+PGPASSWORD=5525 psql -h localhost -U rootuser -d origin -c "SELECT email, role FROM users LIMIT 5;"
 ```
 
 ## المشاكل الشائعة وحلولها
@@ -69,7 +69,7 @@ cd frontend && rm -rf node_modules && npm install
 - قاعدة البيانات: PostgreSQL على المنفذ 5432
 - المستخدم: rootuser
 - كلمة المرور: 5525
-- اسم قاعدة البيانات: atlas
+- اسم قاعدة البيانات: origin
 - نوع التخزين: LOCAL (بدون MinIO)
 
 ## بنية المشروع

@@ -1,5 +1,5 @@
 
-# 🧹 Resetting Atlas CMMS Database and MinIO Data
+# 🧹 Resetting Origin CMMS Database and MinIO Data
 
 If you need to delete the existing PostgresSQL and MinIO data for a fresh start, follow this step-by-step guide.
 
@@ -9,7 +9,7 @@ If you need to delete the existing PostgresSQL and MinIO data for a fresh start,
 
 ## 📁 Step 1: Stop and Remove Containers
 
-Shut down all running containers related to Atlas CMMS:
+Shut down all running containers related to Origin CMMS:
 
 ```bash
 docker compose down
@@ -19,17 +19,17 @@ docker compose down
 
 ## 🗑️ Step 2: Remove Docker Volumes
 
-Atlas CMMS uses named Docker volumes for data persistence:
-- `atlas-cmms_postgres_data` for PostgreSQL
-- `atlas-cmms_minio_data` for MinIO
+Origin CMMS uses named Docker volumes for data persistence:
+- `origin-cmms_postgres_data` for PostgreSQL
+- `origin-cmms_minio_data` for MinIO
 
 Delete them with:
 
 ```bash
-docker volume rm atlas-cmms_postgres_data atlas-cmms_minio_data
+docker volume rm origin-cmms_postgres_data origin-cmms_minio_data
 ```
 
-## 🚀 Step 4: Restart Atlas CMMS
+## 🚀 Step 4: Restart Origin CMMS
 
 Recreate containers and volumes with fresh data:
 
@@ -44,4 +44,4 @@ docker compose up -d
 You now have:
 - A fresh PostgreSQL database (`POSTGRES_DB`)
 - An empty MinIO bucket
-- Atlas CMMS services running on a clean slate
+- Origin CMMS services running on a clean slate

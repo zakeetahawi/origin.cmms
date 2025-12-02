@@ -1,11 +1,11 @@
-# Atlas CMMS NGINX proxy manager setup guide
+# Origin CMMS NGINX proxy manager setup guide
 
 ## 1. Subdomain Setup
 
 You will need **three subdomains** pointed at your NGINX Proxy Manager (NPM) installation.  
 Example subdomains:
 
-- `maint.domain.com` → Access your Atlas CMMS instance
+- `maint.domain.com` → Access your Origin CMMS instance
 - `maintapi.domain.com` → Backend API (used by frontend)
 - `maintminio.domain.com` → Access for MinIO containers
 
@@ -40,7 +40,7 @@ PUBLIC_MINIO_ENDPOINT=https://maintminio.domain.com
 
 ## 5. Restart
 
-Restart your Docker containers or restart the entire Atlas CMMS host/VM.
+Restart your Docker containers or restart the entire Origin CMMS host/VM.
 
 ## 6. Test Access
 

@@ -1,10 +1,10 @@
-name: atlas-cmms
+name: origin-cmms
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: atlas_db
+    container_name: origin_db
     environment:
-      POSTGRES_DB: atlas
+      POSTGRES_DB: origin
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PWD}
     ports:
@@ -12,15 +12,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   api:
-    image: intelloop/atlas-cmms-backend
-    container_name: atlas-cmms-backend
+    image: intelloop/origin-cmms-backend
+    container_name: origin-cmms-backend
     depends_on:
       - postgres
       - minio
     volumes:
       - ./logo:/app/static/images
     environment:
-      DB_URL: postgres/atlas
+      DB_URL: postgres/origin
       DB_USER: ${POSTGRES_USER}
       DB_PWD: ${POSTGRES_PWD}
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
@@ -38,7 +38,7 @@ services:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       MINIO_ENDPOINT: http://minio:9000
-      MINIO_BUCKET: atlas-bucket
+      MINIO_BUCKET: origin-bucket
       MINIO_ACCESS_KEY: ${MINIO_USER}
       MINIO_SECRET_KEY: ${MINIO_PASSWORD}
       STORAGE_TYPE: ${STORAGE_TYPE:-minio} #gpc|minio
@@ -58,8 +58,8 @@ services:
     ports:
       - "8080:8080"
   frontend:
-    image: intelloop/atlas-cmms-frontend
-    container_name: atlas-cmms-frontend
+    image: intelloop/origin-cmms-frontend
+    container_name: origin-cmms-frontend
     environment:
         API_URL: ${PUBLIC_API_URL}
         GOOGLE_KEY: ${GOOGLE_KEY:- }
@@ -79,7 +79,7 @@ services:
       - api
   minio:
     image: minio/minio:RELEASE.2025-04-22T22-12-26Z
-    container_name: atlas_minio
+    container_name: origin_minio
     environment:
       MINIO_ROOT_USER: ${MINIO_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Start Backend (Spring Boot) for Atlas CMMS
+# Start Backend (Spring Boot) for Origin CMMS
 
 set -e
 
@@ -21,7 +21,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 echo -e "${GREEN}====================================${NC}"
-echo -e "${GREEN}    Starting Atlas CMMS Backend     ${NC}"
+echo -e "${GREEN}    Starting Origin CMMS Backend     ${NC}"
 echo -e "${GREEN}====================================${NC}"
 
 # Change to api directory
@@ -44,7 +44,7 @@ else
 fi
 
 # Set database connection string
-export DB_URL=${DB_HOST:-localhost}:${DB_PORT:-5432}/${DB_NAME:-atlas}
+export DB_URL=${DB_HOST:-localhost}:${DB_PORT:-5432}/${DB_NAME:-origin}
 
 echo -e "${YELLOW}Configuration:${NC}"
 echo "  Database: $DB_URL"
@@ -97,7 +97,7 @@ fi
 
 # Check database connection
 echo -e "${YELLOW}Checking database connection...${NC}"
-PGPASSWORD=${POSTGRES_PWD} psql -h ${DB_HOST:-localhost} -p ${DB_PORT:-5432} -U ${POSTGRES_USER} -d ${DB_NAME:-atlas} -c '\q' 2>/dev/null
+PGPASSWORD=${POSTGRES_PWD} psql -h ${DB_HOST:-localhost} -p ${DB_PORT:-5432} -U ${POSTGRES_USER} -d ${DB_NAME:-origin} -c '\q' 2>/dev/null
 if [ $? -ne 0 ]; then
     echo -e "${RED}Cannot connect to database!${NC}"
     echo -e "${YELLOW}Please ensure PostgreSQL is running and database is configured${NC}"

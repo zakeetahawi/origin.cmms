@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Test Setup for Atlas CMMS
+# Test Setup for Origin CMMS
 
 # Don't exit on error for test script
 set +e
@@ -17,7 +17,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 echo -e "${BLUE}====================================${NC}"
-echo -e "${BLUE}   Testing Atlas CMMS Setup        ${NC}"
+echo -e "${BLUE}   Testing Origin CMMS Setup        ${NC}"
 echo -e "${BLUE}====================================${NC}"
 echo ""
 
@@ -125,12 +125,12 @@ if [ ! -z "$POSTGRES_USER" ] && [ ! -z "$POSTGRES_PWD" ]; then
     if [ $? -eq 0 ]; then
         echo -e "✅ Database connection: ${GREEN}OK${NC}"
         
-        # Check if atlas database exists
-        PGPASSWORD=$POSTGRES_PWD psql -h localhost -p 5432 -U $POSTGRES_USER -l 2>/dev/null | grep atlas > /dev/null
+        # Check if origin database exists
+        PGPASSWORD=$POSTGRES_PWD psql -h localhost -p 5432 -U $POSTGRES_USER -l 2>/dev/null | grep origin > /dev/null
         if [ $? -eq 0 ]; then
-            echo -e "✅ Atlas database: ${GREEN}Exists${NC}"
+            echo -e "✅ Origin database: ${GREEN}Exists${NC}"
         else
-            echo -e "⚠️  Atlas database: ${YELLOW}Not created yet${NC}"
+            echo -e "⚠️  Origin database: ${YELLOW}Not created yet${NC}"
             echo -e "   Run: ${BLUE}$SCRIPT_DIR/setup-db.sh${NC} to create it"
         fi
     else

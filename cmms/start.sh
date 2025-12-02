@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Quick Start Script for Atlas CMMS
+# Quick Start Script for Origin CMMS
 
 # Colors for output
 RED='\033[0;31m'
@@ -11,7 +11,7 @@ MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 echo -e "${MAGENTA}╔══════════════════════════════════════╗${NC}"
-echo -e "${MAGENTA}║   Atlas CMMS - Quick Start           ║${NC}"
+echo -e "${MAGENTA}║   Origin CMMS - Quick Start           ║${NC}"
 echo -e "${MAGENTA}╚══════════════════════════════════════╝${NC}"
 echo ""
 
@@ -45,7 +45,7 @@ echo -e "${GREEN}✓ PostgreSQL is running${NC}"
 
 # Check database
 echo -e "${YELLOW}Checking database...${NC}"
-PGPASSWORD=${POSTGRES_PWD} psql -h localhost -U ${POSTGRES_USER} -d atlas -c '\q' 2>/dev/null
+PGPASSWORD=${POSTGRES_PWD} psql -h localhost -U ${POSTGRES_USER} -d origin -c '\q' 2>/dev/null
 if [ $? -ne 0 ]; then
     echo -e "${RED}Cannot connect to database!${NC}"
     echo -e "${YELLOW}Creating database...${NC}"
@@ -53,8 +53,8 @@ if [ $? -ne 0 ]; then
     # Try to create database
     PGPASSWORD=postgres psql -h localhost -U postgres <<EOF 2>/dev/null
 CREATE USER ${POSTGRES_USER} WITH PASSWORD '${POSTGRES_PWD}';
-CREATE DATABASE atlas OWNER ${POSTGRES_USER};
-GRANT ALL PRIVILEGES ON DATABASE atlas TO ${POSTGRES_USER};
+CREATE DATABASE origin OWNER ${POSTGRES_USER};
+GRANT ALL PRIVILEGES ON DATABASE origin TO ${POSTGRES_USER};
 EOF
     
     if [ $? -eq 0 ]; then

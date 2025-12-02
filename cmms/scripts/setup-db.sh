@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setup PostgreSQL Database for Atlas CMMS
+# Setup PostgreSQL Database for Origin CMMS
 
 set -e
 
@@ -28,7 +28,7 @@ else
 fi
 
 # Default values if not set in .env
-DB_NAME=${DB_NAME:-atlas}
+DB_NAME=${DB_NAME:-origin}
 DB_USER=${POSTGRES_USER:-rootUser}
 DB_PASSWORD=${POSTGRES_PWD:-mypassword}
 DB_HOST=${DB_HOST:-localhost}

@@ -1,4 +1,4 @@
-# Atlas CMMS Frontend
+# Origin CMMS Frontend
 
 This is the frontend of the web application developed with React. You can see more explanations in [Purpose.pdf](Purpose.pdf).
 We would be very happy to have new contributors join us.

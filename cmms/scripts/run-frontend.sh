@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Start Frontend (React) for Atlas CMMS
+# Start Frontend (React) for Origin CMMS
 
 set -e
 
@@ -16,7 +16,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 echo -e "${GREEN}====================================${NC}"
-echo -e "${GREEN}   Starting Atlas CMMS Frontend     ${NC}"
+echo -e "${GREEN}   Starting Origin CMMS Frontend     ${NC}"
 echo -e "${GREEN}====================================${NC}"
 
 # Change to frontend directory

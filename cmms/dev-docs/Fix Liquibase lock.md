@@ -23,7 +23,7 @@ WHERE ID = 1;
 ## How to Execute
 
 ```bash
-docker exec -i atlas_db psql -U $POSTGRES_USER -d atlas -c "UPDATE DATABASECHANGELOGLOCK SET LOCKED=false, LOCKGRANTED=null, LOCKEDBY=null WHERE ID=1;"
+docker exec -i origin_db psql -U $POSTGRES_USER -d origin -c "UPDATE DATABASECHANGELOGLOCK SET LOCKED=false, LOCKGRANTED=null, LOCKEDBY=null WHERE ID=1;"
 ```
 
 Replace `$POSTGRES_USER` with your actual username if not using environment variables.
@@ -33,7 +33,7 @@ Replace `$POSTGRES_USER` with your actual username if not using environment vari
 You can verify that the lock was released by running:
 
 ```bash
-docker exec -i atlas_db psql -U $POSTGRES_USER -d atlas -c "SELECT * FROM DATABASECHANGELOGLOCK;"
+docker exec -i origin_db psql -U $POSTGRES_USER -d origin -c "SELECT * FROM DATABASECHANGELOGLOCK;"
 ```
 
 The output should show `LOCKED = false`.

@@ -1,4 +1,4 @@
-# Atlas CMMS API
+# Origin CMMS API
 
 This is the REST backend (Java8-Spring Boot) of the web
 application.

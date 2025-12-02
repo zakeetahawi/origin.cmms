@@ -12,11 +12,11 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo -e "${GREEN}====================================${NC}"
-echo -e "${GREEN}  Starting Atlas CMMS Backend       ${NC}"
+echo -e "${GREEN}  Starting Origin CMMS Backend       ${NC}"
 echo -e "${GREEN}     (Direct Method)                ${NC}"
 echo -e "${GREEN}====================================${NC}"
 
-cd /home/zakee/atlas/cmms/api
+cd /home/zakee/origin/cmms/api
 
 # Check if dependencies are installed
 if [ ! -d "target" ]; then
@@ -34,10 +34,10 @@ echo ""
     -Dspring-boot.run.jvmArguments=" \
         -Xmx2048m \
         -Dserver.port=8080 \
-        -Dspring.datasource.url=jdbc:postgresql://localhost:5432/atlas \
+        -Dspring.datasource.url=jdbc:postgresql://localhost:5432/origin \
         -Dspring.datasource.username=rootuser \
         -Dspring.datasource.password=5525 \
-        -DDB_URL=localhost:5432/atlas \
+        -DDB_URL=localhost:5432/origin \
         -DDB_USER=rootuser \
         -DDB_PWD=5525 \
         -DJWT_SECRET_KEY=xK8mP9qR2sT5vW7yA3bC6dE9fG2jH5kN8pQ \

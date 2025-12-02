@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Unified Run Script for Atlas CMMS (Backend + Frontend + Mobile Web)
+# Unified Run Script for Origin CMMS (Backend + Frontend + Mobile Web)
 
 set -e
 
@@ -141,7 +141,7 @@ check_status() {
 # Menu Loop
 while true; do
     echo -e "\n${MAGENTA}╔══════════════════════════════════════╗${NC}"
-    echo -e "${MAGENTA}║    Atlas CMMS - Unified Launcher     ║${NC}"
+    echo -e "${MAGENTA}║    Origin CMMS - Unified Launcher     ║${NC}"
     echo -e "${MAGENTA}╚══════════════════════════════════════╝${NC}"
     echo "1) Start ALL (MinIO + Backend + Frontend + Mobile)"
     echo "2) Start MinIO Only"

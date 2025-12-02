@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Stop Script for Atlas CMMS
+# Stop Script for Origin CMMS
 
 # Colors for output
 RED='\033[0;31m'
@@ -8,7 +8,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${YELLOW}Stopping Atlas CMMS services...${NC}"
+echo -e "${YELLOW}Stopping Origin CMMS services...${NC}"
 echo ""
 
 # Function to stop process on port

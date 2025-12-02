@@ -1,11 +1,11 @@
-# Running a SQL Command on the Atlas CMMS Database
+# Running a SQL Command on the Origin CMMS Database
 
-This guide explains how to run a SQL command on the PostgreSQL database container used in the `atlas-cmms` Docker Compose setup.
+This guide explains how to run a SQL command on the PostgreSQL database container used in the `origin-cmms` Docker Compose setup.
 
 ## Prerequisites
 
 - Docker and Docker Compose installed.
-- The `atlas-cmms` stack up and running:
+- The `origin-cmms` stack up and running:
   
 ```bash
 docker compose up -d
@@ -16,13 +16,13 @@ docker compose up -d
 To execute a SQL command, first access the running PostgreSQL container:
 
 ```bash
-docker exec -it atlas_db psql -U $POSTGRES_USER -d atlas
+docker exec -it origin_db psql -U $POSTGRES_USER -d origin
 ```
 
-- `atlas_db`: Name of the container as defined in `docker-compose.yml`
+- `origin_db`: Name of the container as defined in `docker-compose.yml`
 - `psql`: The PostgreSQL CLI tool
 - `-U $POSTGRES_USER`: Connects using the username from environment variables
-- `-d atlas`: Connects to the `atlas` database
+- `-d origin`: Connects to the `origin` database
 
 If your environment variables are not exported, replace `$POSTGRES_USER` with your actual database username.
 
@@ -45,7 +45,7 @@ To exit the `psql` shell, type:
 You can also run a SQL command directly without entering the interactive shell:
 
 ```bash
-docker exec -i atlas_db psql -U $POSTGRES_USER -d atlas -c "SELECT * FROM own_user;"
+docker exec -i origin_db psql -U $POSTGRES_USER -d origin -c "SELECT * FROM own_user;"
 ```
 
 Replace `"SELECT * FROM own_user;"` with your actual SQL command.
@@ -57,8 +57,8 @@ For more advanced database operations or bulk SQL files, consider mounting a `.s
 Assuming you have a file `init.sql` in your current directory:
 
 ```bash
-docker cp init.sql atlas_db:/init.sql
-docker exec -i atlas_db psql -U $POSTGRES_USER -d atlas -f /init.sql
+docker cp init.sql origin_db:/init.sql
+docker exec -i origin_db psql -U $POSTGRES_USER -d origin -f /init.sql
 ```
 
 ---
@@ -72,7 +72,7 @@ docker exec -i atlas_db psql -U $POSTGRES_USER -d atlas -f /init.sql
 
 - Check logs if connection fails:  
   ```bash
-  docker logs atlas_db
+  docker logs origin_db
   ```
 
 ---

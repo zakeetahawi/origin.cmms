@@ -1,7 +1,7 @@
 #!/bin/bash
-# Atlas CMMS Backup and Restore Utility
+# Origin CMMS Backup and Restore Utility
 # Linux version for Docker environments
-# This script allows users to backup and restore the Atlas CMMS system
+# This script allows users to backup and restore the Origin CMMS system
 
 # Default variables - Will be overridden by .env file if it exists
 POSTGRES_USER="rootUser"
@@ -10,16 +10,16 @@ MINIO_USER="minio"
 MINIO_PASSWORD="minio123"
 
 # Directory where backups will be stored
-BACKUP_DIR="./atlas_backups"
+BACKUP_DIR="./origin_backups"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
 # Function to display usage information
 show_usage() {
-    echo "Usage: ./atlas-backup.sh [backup|restore] [options]"
+    echo "Usage: ./origin-backup.sh [backup|restore] [options]"
     echo ""
     echo "Commands:"
-    echo "  backup                Create a backup of Atlas CMMS"
-    echo "  restore <filename>    Restore Atlas CMMS from a backup file"
+    echo "  backup                Create a backup of Origin CMMS"
+    echo "  restore <filename>    Restore Origin CMMS from a backup file"
     echo ""
     echo "Options:"
     echo "  --skip-db             Skip database backup/restore"
@@ -77,11 +77,11 @@ load_env_file() {
 }
 
 # Function to backup the system
-backup_atlas_cmms() {
-    BACKUP_FILENAME="atlas_backup_${TIMESTAMP}.tar.gz"
-    TEMP_DIR="/tmp/atlas_backup_$TIMESTAMP"
+backup_origin_cmms() {
+    BACKUP_FILENAME="origin_backup_${TIMESTAMP}.tar.gz"
+    TEMP_DIR="/tmp/origin_backup_$TIMESTAMP"
 
-    echo "Starting Atlas CMMS backup..."
+    echo "Starting Origin CMMS backup..."
 
     # Check if Docker is running
     if ! check_docker_running; then
@@ -95,14 +95,14 @@ backup_atlas_cmms() {
     if [ "$SKIP_DB" != "true" ]; then
         echo "Backing up PostgreSQL database..."
 
-        if ! check_container_running "atlas_db"; then
-            echo "Error: Atlas database container (atlas_db) is not running."
-            echo "Make sure your Atlas CMMS environment is up and running."
+        if ! check_container_running "origin_db"; then
+            echo "Error: Origin database container (origin_db) is not running."
+            echo "Make sure your Origin CMMS environment is up and running."
             rm -rf "$TEMP_DIR"
             exit 1
         fi
 
-        docker exec atlas_db pg_dump -U "$POSTGRES_USER" --encoding=UTF8 atlas > "$TEMP_DIR/atlas_db.sql"
+        docker exec origin_db pg_dump -U "$POSTGRES_USER" --encoding=UTF8 origin > "$TEMP_DIR/origin_db.sql"
 
         if [ $? -eq 0 ]; then
             echo "Database backup complete."
@@ -117,9 +117,9 @@ backup_atlas_cmms() {
     if [ "$SKIP_FILES" != "true" ]; then
         echo "Backing up MinIO data..."
 
-        if ! check_container_running "atlas_minio"; then
-            echo "Error: MinIO container (atlas_minio) is not running."
-            echo "Make sure your Atlas CMMS environment is up and running."
+        if ! check_container_running "origin_minio"; then
+            echo "Error: MinIO container (origin_minio) is not running."
+            echo "Make sure your Origin CMMS environment is up and running."
             rm -rf "$TEMP_DIR"
             exit 1
         fi
@@ -132,8 +132,8 @@ backup_atlas_cmms() {
 set -e
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/bin/mc
 chmod +x /usr/bin/mc
-mc alias set atlas-minio http://minio:9000 "$MINIO_USER" "$MINIO_PASSWORD" --api S3v4
-mc mirror atlas-minio/atlas-bucket /backup_data
+mc alias set origin-minio http://minio:9000 "$MINIO_USER" "$MINIO_PASSWORD" --api S3v4
+mc mirror origin-minio/origin-bucket /backup_data
 echo "MinIO backup complete."
 EOL
 
@@ -143,7 +143,7 @@ EOL
         echo "Running MinIO backup..."
 
         docker run --rm \
-            --network atlas-cmms_default \
+            --network origin-cmms_default \
             -v "$TEMP_DIR/minio_backup.sh:/minio_backup.sh" \
             -v "$TEMP_DIR/minio_data:/backup_data" \
             alpine:latest /bin/sh /minio_backup.sh
@@ -169,7 +169,7 @@ EOL
 }
 
 # Function to restore the system
-restore_atlas_cmms() {
+restore_origin_cmms() {
     BACKUP_FILE="$1"
 
     # Check if backup file is specified
@@ -185,9 +185,9 @@ restore_atlas_cmms() {
     fi
 
     # Create temp directory for extraction
-    TEMP_DIR="/tmp/atlas_restore_$TIMESTAMP"
+    TEMP_DIR="/tmp/origin_restore_$TIMESTAMP"
 
-    echo "Starting Atlas CMMS restore..."
+    echo "Starting Origin CMMS restore..."
 
     # Check if Docker is running
     if ! check_docker_running; then
@@ -200,12 +200,12 @@ restore_atlas_cmms() {
     tar -xzf "$BACKUP_FILE" -C "$TEMP_DIR"
 
     # Restore Postgres database
-    if [ "$SKIP_DB" != "true" ] && [ -f "$TEMP_DIR/atlas_db.sql" ]; then
+    if [ "$SKIP_DB" != "true" ] && [ -f "$TEMP_DIR/origin_db.sql" ]; then
         echo "Restoring PostgreSQL database..."
 
-        if ! check_container_running "atlas_db"; then
-            echo "Error: Atlas database container (atlas_db) is not running."
-            echo "Make sure your Atlas CMMS environment is up and running."
+        if ! check_container_running "origin_db"; then
+            echo "Error: Origin database container (origin_db) is not running."
+            echo "Make sure your Origin CMMS environment is up and running."
             rm -rf "$TEMP_DIR"
             exit 1
         fi
@@ -214,16 +214,16 @@ restore_atlas_cmms() {
         read -p "Continue with database restore? (y/n): " confirm
         if [[ "$confirm" =~ ^[yY] ]]; then
             # Drop old backup DB if it exists
-            docker exec atlas_db bash -c "PGPASSWORD=$POSTGRES_PWD psql -U $POSTGRES_USER -d postgres -c 'DROP DATABASE IF EXISTS atlas_old;'"
+            docker exec origin_db bash -c "PGPASSWORD=$POSTGRES_PWD psql -U $POSTGRES_USER -d postgres -c 'DROP DATABASE IF EXISTS origin_old;'"
 
-            # Rename current "atlas" to "atlas_old"
-            docker exec atlas_db bash -c "PGPASSWORD=$POSTGRES_PWD psql -U $POSTGRES_USER -d postgres -c 'ALTER DATABASE atlas RENAME TO atlas_old;'"
+            # Rename current "origin" to "origin_old"
+            docker exec origin_db bash -c "PGPASSWORD=$POSTGRES_PWD psql -U $POSTGRES_USER -d postgres -c 'ALTER DATABASE origin RENAME TO origin_old;'"
 
-            # Create new "atlas" database
-            docker exec atlas_db bash -c "PGPASSWORD=$POSTGRES_PWD psql -U $POSTGRES_USER -d postgres -c 'CREATE DATABASE atlas;'"
+            # Create new "origin" database
+            docker exec origin_db bash -c "PGPASSWORD=$POSTGRES_PWD psql -U $POSTGRES_USER -d postgres -c 'CREATE DATABASE origin;'"
 
             # Restore from backup
-            docker exec -i atlas_db psql -U "$POSTGRES_USER" -d atlas --set client_encoding=UTF8 < "$TEMP_DIR/atlas_db.sql"
+            docker exec -i origin_db psql -U "$POSTGRES_USER" -d origin --set client_encoding=UTF8 < "$TEMP_DIR/origin_db.sql"
 
             if [ $? -eq 0 ]; then
                 echo "Database restore complete."
@@ -240,9 +240,9 @@ restore_atlas_cmms() {
     if [ "$SKIP_FILES" != "true" ] && [ -d "$TEMP_DIR/minio_data" ]; then
         echo "Restoring MinIO data..."
 
-        if ! check_container_running "atlas_minio"; then
-            echo "Error: MinIO container (atlas_minio) is not running."
-            echo "Make sure your Atlas CMMS environment is up and running."
+        if ! check_container_running "origin_minio"; then
+            echo "Error: MinIO container (origin_minio) is not running."
+            echo "Make sure your Origin CMMS environment is up and running."
             rm -rf "$TEMP_DIR"
             exit 1
         fi
@@ -256,8 +256,8 @@ restore_atlas_cmms() {
 set -e
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/bin/mc
 chmod +x /usr/bin/mc
-mc alias set atlas-minio http://minio:9000 "$MINIO_USER" "$MINIO_PASSWORD" --api S3v4
-mc mirror /backup_data atlas-minio/atlas-bucket --overwrite
+mc alias set origin-minio http://minio:9000 "$MINIO_USER" "$MINIO_PASSWORD" --api S3v4
+mc mirror /backup_data origin-minio/origin-bucket --overwrite
 echo "MinIO restore complete."
 EOL
 
@@ -267,7 +267,7 @@ EOL
             echo "Running MinIO restore..."
 
             docker run --rm \
-                --network atlas-cmms_default \
+                --network origin-cmms_default \
                 -v "$TEMP_DIR/minio_restore.sh:/minio_restore.sh" \
                 -v "$TEMP_DIR/minio_data:/backup_data" \
                 alpine:latest /bin/sh /minio_restore.sh
@@ -323,10 +323,10 @@ done
 # Execute the appropriate command
 case "$COMMAND" in
     backup)
-        backup_atlas_cmms
+        backup_origin_cmms
         ;;
     restore)
-        restore_atlas_cmms "$BACKUP_FILE"
+        restore_origin_cmms "$BACKUP_FILE"
         ;;
     help)
         show_usage
