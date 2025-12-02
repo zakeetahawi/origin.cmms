@@ -71,3 +71,7 @@ minio-data/
 *.zip
 *.rar
 
+
+# Large binary files
+.bin/
+*.pdf

@@ -30,8 +30,11 @@ echo -e "${BLUE}Java: $(java -version 2>&1 | head -1)${NC}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 LOG_DIR="$PROJECT_DIR/logs"
+MINIO_BIN="$(dirname "$PROJECT_DIR")/.bin/minio"
+MINIO_DATA="$PROJECT_DIR/minio-data"
 
 mkdir -p "$LOG_DIR"
+mkdir -p "$MINIO_DATA"
 
 # Functions
 check_port() {
@@ -53,8 +56,38 @@ stop_service() {
     fi
 }
 
+start_minio() {
+    echo -e "${CYAN}Starting MinIO...${NC}"
+    if check_port 9000; then
+        echo -e "${GREEN}MinIO already running on port 9000${NC}"
+        return 0
+    fi
+    
+    if [ -f "$MINIO_BIN" ]; then
+        export MINIO_ROOT_USER=minio
+        export MINIO_ROOT_PASSWORD=minio123
+        nohup "$MINIO_BIN" server "$MINIO_DATA" --console-address ":9001" > "$LOG_DIR/minio.log" 2>&1 &
+        echo -e "${YELLOW}Waiting for MinIO to start...${NC}"
+        sleep 3
+        if check_port 9000; then
+            echo -e "${GREEN}MinIO started successfully!${NC}"
+            # Setup bucket
+            "$PROJECT_DIR/setup-minio.sh" > /dev/null 2>&1 || true
+        else
+            echo -e "${RED}MinIO failed to start. Check $LOG_DIR/minio.log${NC}"
+        fi
+    else
+        echo -e "${RED}MinIO binary not found at: $MINIO_BIN${NC}"
+        echo -e "${YELLOW}Install MinIO first or update MINIO_BIN path${NC}"
+    fi
+}
+
 start_backend() {
     echo -e "${CYAN}Starting Backend (Spring Boot)...${NC}"
+    # Ensure MinIO is running first
+    if ! check_port 9000; then
+        start_minio
+    fi
     stop_service 8080 "Backend"
     cd "$PROJECT_DIR/api"
     nohup mvn spring-boot:run -DskipTests > "$LOG_DIR/backend.log" 2>&1 &
@@ -87,14 +120,18 @@ stop_all() {
     stop_service 19006 "Mobile Web (19006)"
     stop_service 19007 "Mobile Web (19007)"
     stop_service 8081 "Metro Bundler"
+    stop_service 9000 "MinIO API"
+    stop_service 9001 "MinIO Console"
     pkill -f "spring-boot:run" || true
     pkill -f "react-scripts" || true
     pkill -f "expo start" || true
+    pkill -f "minio server" || true
     echo -e "${GREEN}All services stopped.${NC}"
 }
 
 check_status() {
     echo -e "\n${BLUE}--- Service Status ---${NC}"
+    if check_port 9000; then echo -e "MinIO (9000): ${GREEN}RUNNING${NC}"; else echo -e "MinIO (9000): ${RED}STOPPED${NC}"; fi
     if check_port 8080; then echo -e "Backend (8080): ${GREEN}RUNNING${NC}"; else echo -e "Backend (8080): ${RED}STOPPED${NC}"; fi
     if check_port 3000; then echo -e "Frontend (3000): ${GREEN}RUNNING${NC}"; else echo -e "Frontend (3000): ${RED}STOPPED${NC}"; fi
     if check_port 19006 || check_port 19007; then echo -e "Mobile Web: ${GREEN}RUNNING${NC}"; else echo -e "Mobile Web: ${RED}STOPPED${NC}"; fi
@@ -106,57 +143,64 @@ while true; do
     echo -e "\n${MAGENTA}╔══════════════════════════════════════╗${NC}"
     echo -e "${MAGENTA}║    Atlas CMMS - Unified Launcher     ║${NC}"
     echo -e "${MAGENTA}╚══════════════════════════════════════╝${NC}"
-    echo "1) Start ALL (Backend + Frontend + Mobile)"
-    echo "2) Start Backend Only"
-    echo "3) Start Frontend Only"
-    echo "4) Start Mobile Web Only"
-    echo "5) Stop ALL"
-    echo "6) Check Status"
-    echo "7) View Logs (Tail)"
-    echo "8) Exit"
+    echo "1) Start ALL (MinIO + Backend + Frontend + Mobile)"
+    echo "2) Start MinIO Only"
+    echo "3) Start Backend Only (auto-starts MinIO)"
+    echo "4) Start Frontend Only"
+    echo "5) Start Mobile Web Only"
+    echo "6) Stop ALL"
+    echo "7) Check Status"
+    echo "8) View Logs (Tail)"
+    echo "9) Exit"
     
-    read -p "Select an option [1-8]: " choice
+    read -p "Select an option [1-9]: " choice
     
     case $choice in
         1)
             stop_all
+            start_minio
             start_backend
-            echo -e "${YELLOW}Waiting 10s for Backend...${NC}"
-            sleep 10
+            echo -e "${YELLOW}Waiting 15s for Backend...${NC}"
+            sleep 15
             start_frontend
             start_mobile
             check_status
             ;;
         2)
-            start_backend
+            start_minio
             ;;
         3)
-            start_frontend
+            start_backend
             ;;
         4)
-            start_mobile
+            start_frontend
             ;;
         5)
+            start_mobile
+            ;;
+        6)
             stop_all
             check_status
             ;;
-        6)
+        7)
             check_status
             ;;
-        7)
+        8)
             echo "Select log to view:"
-            echo "1) Backend"
-            echo "2) Frontend"
-            echo "3) Mobile"
-            read -p "Log [1-3]: " log_choice
+            echo "1) MinIO"
+            echo "2) Backend"
+            echo "3) Frontend"
+            echo "4) Mobile"
+            read -p "Log [1-4]: " log_choice
             case $log_choice in
-                1) tail -f "$LOG_DIR/backend.log" ;;
-                2) tail -f "$LOG_DIR/frontend.log" ;;
-                3) tail -f "$LOG_DIR/mobile.log" ;;
+                1) tail -f "$LOG_DIR/minio.log" ;;
+                2) tail -f "$LOG_DIR/backend.log" ;;
+                3) tail -f "$LOG_DIR/frontend.log" ;;
+                4) tail -f "$LOG_DIR/mobile.log" ;;
                 *) echo "Invalid log choice" ;;
             esac
             ;;
-        8)
+        9)
             echo "Exiting..."
             exit 0
             ;;
