@@ -1,0 +1,9 @@
+ID,Title,Status,Priority,Description,Due Date,Estimated Duration,Requires Signature,Category,Location Name,Team Name,Primary User,Assigned To,Asset Name,Completed By,Completed On,Archived,Feedback,Contractors
+1,صيانة دورية للخوادم,COMPLETE,MEDIUM,فحص وتنظيف الخوادم الرئيسية,44927,2.0,No,,غرفة الخوادم 1,,,,,44926,No,تمت الصيانة بنجاح,
+2,تحديث نظام التشغيل,IN_PROGRESS,HIGH,تحديث Windows Server إلى أحدث إصدار,44930,4.0,Yes,,غرفة الخوادم 1,,,,,,,شركة مايكروسوفت مصر
+3,فحص كاميرات المراقبة,OPEN,MEDIUM,فحص جميع كاميرات المراقبة,44932,1.5,No,,غرفة المراقبة,,,,,,No,,
+4,استبدال بطارية UPS,COMPLETE,HIGH,استبدال بطاريات وحدة الطاقة الاحتياطية,44925,1.0,No,,غرفة الخوادم 1,,,,,44925,No,تم الاستبدال,
+5,تركيب هوائي جديد,ON_HOLD,LOW,تركيب هوائي 5G في برج المعادي,44935,6.0,Yes,,برج الاتصالات 1,,,,,,,شركة إريكسون مصر
+6,صيانة مكيف الهواء,OPEN,HIGH,صيانة دورية للمكيف,44929,2.0,No,,غرفة الخوادم 1,,,,,,No,,
+7,تمديد كابلات شبكة,OPEN,MEDIUM,تمديد كابلات CAT6 للفرع الجديد,44933,3.0,No,,فرع الإسكندرية,,,,,,No,,
+8,فحص المولد الكهربائي,IN_PROGRESS,HIGH,فحص وصيانة المولد الرئيسي,44928,2.5,Yes,,مركز البيانات الرئيسي,,,,,,No,,شركة كاتربيلر مصر

@@ -77,6 +77,17 @@ public class DemoController {
         return new SuccessResponse(response.isSuccess(), response.getMessage());
     }
 
+    @GetMapping("/import-data")
+    public SuccessResponse importDataToCurrentAccount(HttpServletRequest req) {
+        OwnUser user = userService.whoami(req);
+        try {
+            importDemoData(user.getCompany());
+            return new SuccessResponse(true, "Demo data imported successfully");
+        } catch (Exception e) {
+            return new SuccessResponse(false, "Failed to import demo data: " + e.getMessage());
+        }
+    }
+
     private void importDemoData(Company company) {
         try {
             importLocations(company);
@@ -92,22 +103,22 @@ public class DemoController {
     }
 
     private void importLocations(Company company) throws IOException {
-        List<LocationImportDTO> locations = parseCsv("demo-data/telecom/Locations.csv", this::toLocationImportDTO);
+        List<LocationImportDTO> locations = parseCsv("demo-data/egypt/Locations.csv", this::toLocationImportDTO);
         importService.importLocations(locations, company);
     }
 
     private void importWorkOrders(Company company) throws IOException {
-        List<WorkOrderImportDTO> workOrders = parseCsv("demo-data/telecom/WorkOrders.csv", this::toWorkOrderImportDTO);
+        List<WorkOrderImportDTO> workOrders = parseCsv("demo-data/egypt/WorkOrders.csv", this::toWorkOrderImportDTO);
         importService.importWorkOrders(workOrders, company);
     }
 
     private void importAssets(Company company) throws IOException {
-        List<AssetImportDTO> assets = parseCsv("demo-data/telecom/Assets.csv", this::toAssetImportDTO);
+        List<AssetImportDTO> assets = parseCsv("demo-data/egypt/Assets.csv", this::toAssetImportDTO);
         importService.importAssets(assets, company);
     }
 
     private void importMeters(Company company, List<Asset> assets) throws IOException {
-        List<MeterImportDTO> meters = parseCsv("demo-data/telecom/Meters.csv", this::toMeterImportDTO);
+        List<MeterImportDTO> meters = parseCsv("demo-data/egypt/Meters.csv", this::toMeterImportDTO);
         meters.forEach(meterImportDTO -> meterImportDTO.setAssetName(
                 assets.get(new Random().nextInt(assets.size())).getName()
         ));
@@ -115,7 +126,7 @@ public class DemoController {
     }
 
     private void importParts(Company company) throws IOException {
-        List<PartImportDTO> parts = parseCsv("demo-data/telecom/Parts.csv", this::toPartImportDTO);
+        List<PartImportDTO> parts = parseCsv("demo-data/egypt/Parts.csv", this::toPartImportDTO);
         importService.importParts(parts, company);
     }
 

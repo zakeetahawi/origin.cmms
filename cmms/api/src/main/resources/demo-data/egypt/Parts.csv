@@ -1,0 +1,16 @@
+Name,Cost,Category,Is a consumable?,Description,Location,Quantity,Barcode
+ذاكرة DDR4 32GB,450,,No,Samsung DDR4 ECC 32GB,مستودع قطع الغيار,25,RAM-32GB-001
+قرص صلب SSD 1TB,850,,No,Samsung 970 EVO Plus 1TB NVMe,مستودع قطع الغيار,15,SSD-1TB-001
+قرص صلب HDD 4TB,680,,No,Seagate IronWolf 4TB,مستودع قطع الغيار,20,HDD-4TB-001
+مزود طاقة 750W,320,,No,Corsair RM750x 80+ Gold,مستودع قطع الغيار,10,PSU-750W-001
+مروحة تبريد,85,,No,Noctua NF-A12x25 PWM,مستودع قطع الغيار,30,FAN-120MM-001
+كابل شبكة CAT6 100م,180,,Yes,كابل شبكة CAT6 UTP,مستودع قطع الغيار,50,CAT6-100M
+موصل RJ45,2,,Yes,موصل شبكة RJ45 CAT6,مستودع قطع الغيار,500,RJ45-001
+بطارية UPS,420,,No,بطارية APC RBC7,مستودع قطع الغيار,8,BATT-UPS-001
+فلتر هواء HEPA,95,,Yes,فلتر هواء للمكيفات,مستودع قطع الغيار,40,FILTER-HEPA-001
+شريط لاصق كهربائي,15,,Yes,شريط عازل كهربائي,مستودع قطع الغيار,100,TAPE-ELEC-001
+مفتاح شبكة 8 منافذ,280,,No,TP-Link TL-SG108 Gigabit,مستودع قطع الغيار,12,SW-8PORT-001
+راوتر واي فاي,650,,No,TP-Link Archer AX73,مستودع قطع الغيار,8,ROUTER-WIFI-001
+كاميرا IP,1200,,No,Hikvision DS-2CD2043G2,مستودع قطع الغيار,6,IPCAM-001
+محول طاقة 12V 5A,65,,No,محول طاقة عالمي,مستودع قطع الغيار,20,PSU-12V-001
+كابل HDMI 3م,45,,Yes,كابل HDMI 2.0,مستودع قطع الغيار,25,HDMI-3M-001

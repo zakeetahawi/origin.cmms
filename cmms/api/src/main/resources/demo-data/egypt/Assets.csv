@@ -1,0 +1,4 @@
+ID,Name,Description,Status,Area,Location Name,Parent Asset,Barcode,Category,Assigned To,Warranty Expiry Date,Additional Info,Serial Number,Workers,Teams names,Associated Parts,Vendor,Contractors
+,خادم-القاهرة-1,خادم Dell PowerEdge R740,Operational,,غرفة الخوادم 1,,SRV-CAI-001,Servers,,,خادم افتراضي رئيسي,SRV1-54321,,,"RAM, Hard Drives",Dell,
+,خادم-القاهرة-2,خادم HP ProLiant DL380,Operational,,غرفة الخوادم 1,,SRV-CAI-002,Servers,,,خادم قواعد بيانات,SRV2-54322,,,"RAM, Hard Drives",HP,
+,موجه-رئيسي-1,Cisco ASR 9000 Series Router,Operational,,مركز العمليات الشبكية,,RTR-001,Network Equipment,,,موجه الشبكة الرئيسي,RTR1-12345,,,"Line Cards, Power Supplies",Cisco,

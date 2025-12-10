@@ -4,7 +4,7 @@ services:
     image: postgres:16-alpine
     container_name: origin_db
     environment:
-      POSTGRES_DB: origin
+      POSTGRES_DB: atlas
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PWD}
     ports:
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./logo:/app/static/images
     environment:
-      DB_URL: postgres/origin
+      DB_URL: postgres/atlas
       DB_USER: ${POSTGRES_USER}
       DB_PWD: ${POSTGRES_PWD}
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
