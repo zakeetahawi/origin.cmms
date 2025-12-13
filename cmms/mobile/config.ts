@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const googleMapsConfig = {
-  apiKey: process.env.GOOGLE_KEY
+  apiKey: Constants.expoConfig?.extra?.GOOGLE_KEY || ''
 };
 
 // Safely get API URL from Expo config with fallback for web
